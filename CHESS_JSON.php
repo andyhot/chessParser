@@ -5,6 +5,7 @@ class CHESS_JSON {
     const MOVE_FROM = 'from';
     const MOVE_TO = 'to';
     const MOVE_NOTATION = 'm';
+		const NAG = "nag";
     const FEN = 'fen';
     const MOVE_COMMENT = 'comment';
     const MOVE_CLOCK = 'clk';
@@ -29,7 +30,7 @@ class CHESS_JSON {
     const PGN_KEY_ACTION_CLR_ARROW = "cal";
 
 
-    protected static $jsKeys = array('MOVE_FROM', 'MOVE_TO', 'MOVE_NOTATION', 'FEN','MOVE_COMMENT',
+    protected static $jsKeys = array('MOVE_FROM', 'MOVE_TO', 'MOVE_NOTATION', 'NAG', 'FEN','MOVE_COMMENT',
         'MOVE_ACTION', 'MOVE_VARIATIONS', 'MOVE_MOVES','MOVE_CAPTURE','MOVE_PROMOTE_TO','MOVE_CASTLE',
         'GAME_METADATA', 'GAME_EVENT', 'GAME_WHITE','GAME_BLACK', 'GAME_ECO',
 

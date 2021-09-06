@@ -49,7 +49,7 @@ class PgnGameParser{
                 }
             }
         }
-        if(!isset($ret[CHESS_JSON::FEN])) {
+        if(!isset($ret[CHESS_JSON::FEN]) || $ret[CHESS_JSON::FEN] == "?") {
             $ret[CHESS_JSON::FEN] = $this->defaultFen;
         }
 
@@ -78,6 +78,9 @@ class PgnGameParser{
             $move = trim($parts[$i]);
 
             switch($move){
+								case '$':
+									$this->moveBuilder->addNag(explode(" ", $parts[$i+1])[0]);
+									break;
                 case '{':
                     if($i==0){
                         $this->moveBuilder->addCommentBeforeFirstMove($parts[$i+1]);
@@ -112,7 +115,7 @@ class PgnGameParser{
     }
 
     private function getMovesAndComments(){
-        $ret = preg_split("/({|})/s", $this->getMoveString(), 0, PREG_SPLIT_DELIM_CAPTURE);
+        $ret = preg_split("/({|}|\\$)/s", $this->getMoveString(), 0, PREG_SPLIT_DELIM_CAPTURE);
         if(!$ret[0]){
             $ret = array_slice($ret, 1);
         }

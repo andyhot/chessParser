@@ -90,7 +90,7 @@ class FenParser0x88
         $fenParts = explode(" ", $this->fen);
         $castleCode = 0;
         for ($i = 0, $count = strlen($fenParts[2]); $i < $count; $i++) {
-            $castleCode += Board0x88Config::$castle[substr($fenParts[2], $i, 1)];
+            $castleCode += @Board0x88Config::$castle[substr($fenParts[2], $i, 1)];
         }
 
         $this->fenParts = array(
@@ -1169,7 +1169,8 @@ class FenParser0x88
     {
         if (is_string($move)) $move = array('m' => $move);
 
-        $move["m"] = preg_replace("/([a-h])([a-h])([0-8])/s", "$1x$2$3", $move["m"]);
+        //TODO: This created an error when specifying which major piece moved to a square.
+      //  $move["m"] = preg_replace("/([a-h])([a-h])([0-8])/s", "$1x$2$3", $move["m"]);
 
         if (isset($move['m'])) {
             if ($move['m'] == '--') {
@@ -1195,6 +1196,9 @@ class FenParser0x88
             'to' => $fromAndTo['to'],
             'fen' => $this->getFen()
         );
+        if (!empty($fromAndTo['promoteTo'])) {
+          $newProperties['promotion'] = $fromAndTo['promoteTo'];
+        }
         return array_merge($move, $newProperties);
     }
 
@@ -1510,7 +1514,7 @@ class FenParser0x88
 
         $castleCode = 0;
         for ($i = 0, $count = strlen($castle); $i < $count; $i++) {
-            $castleCode += Board0x88Config::$castle[substr($castle, $i, 1)];
+            $castleCode += @Board0x88Config::$castle[substr($castle, $i, 1)];
         }
         $this->fenParts['castleCode'] = $castleCode;
     }

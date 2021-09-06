@@ -36,6 +36,11 @@ class MoveBuilder
         return preg_match("/([PNBRQK]?[a-h]?[1-8]?x?[a-h][1-8](?:\=[PNBRQK])?|O(-?O){1,2})[\+#]?(\s*[\!\?]+)?/s", $move);
     }
 
+		private function isNAG($move)
+		{
+			return preg_match('/^[0-9]*/', $move);
+		}
+
     public function addCommentBeforeFirstMove($comment)
     {
         $comment = trim($comment);
@@ -45,6 +50,16 @@ class MoveBuilder
         $this->moveReferences[$this->pointer][] = array();
         $this->addComment($comment);
     }
+
+		public function addNag ($nag) {
+			$nag = trim($nag);
+
+			if (!$this->isNAG($nag)) return;
+			$index = count($this->moveReferences[$this->pointer]) - 1;
+
+			$this->moveReferences[$this->pointer][$index][CHESS_JSON::NAG] = $nag;
+
+		}
 
     public function addComment($comment)
     {
